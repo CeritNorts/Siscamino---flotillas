@@ -1,0 +1,44 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+{
+    Schema::create('drivers', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');
+        $table->string('last_name');
+        $table->string('identification_number')->unique()->comment('Número de identificación personal');
+        $table->string('license_number')->unique();
+        $table->string('license_type')->comment('Tipo de licencia: A, B, C, etc.');
+        $table->date('license_expiry');
+        $table->string('phone');
+        $table->string('emergency_contact')->nullable();
+        $table->string('emergency_phone')->nullable();
+        $table->string('email')->nullable();
+        $table->string('address')->nullable();
+        $table->date('birth_date')->nullable();
+        $table->string('blood_type')->nullable();
+        $table->string('status')->default('active')->comment('active, inactive, on_trip, on_leave');
+        $table->date('hire_date')->nullable();
+        $table->text('notes')->nullable();
+        $table->timestamps();
+        $table->softDeletes();
+    });
+}
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('drivers');
+    }
+};
